@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Ethereum Revolution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5fa;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#cbd5e1;--br:#3730a3;--br2:#0f766e;--onbr:#fff;--tint:#eef2ff;--keybg:#312e81;--good:#14532d;--goodbg:#dcfce7;--bad:#7f1d1d;--badbg:#fee2e2;--warn:#fef3c7;--warnb:#92400e;--info:#e0f2fe;--infob:#075985;--code:#0f172a;--codet:#e2e8f0}
+:root[data-theme=dark]{--bg:#0b1020;--card:#131a2f;--ink:#f1f5f9;--mut:#b4bfd0;--line:#3a4663;--br:#a5b4fc;--br2:#5eead4;--onbr:#0b1020;--tint:#1b2442;--keybg:#3730a3;--good:#86efac;--goodbg:#0f2f1c;--bad:#fca5a5;--badbg:#3b1416;--warn:#33270b;--warnb:#fcd34d;--info:#0b2a40;--infob:#7dd3fc}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;overflow:hidden;line-height:1.5;padding-top:env(safe-area-inset-top,0px)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--br2);outline-offset:2px}
+.top,.dock{display:flex;align-items:center;gap:14px;padding:8px 18px;background:var(--card)}
+.top{border-bottom:1px solid var(--line)}
+.dock{justify-content:space-between;border-top:1px solid var(--line);padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+.brand{font-weight:800;color:var(--br);white-space:nowrap}
+.bar{flex:1;height:8px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--br);transition:width .3s}
+.ic{border:1px solid var(--line);background:var(--card);border-radius:9px;padding:4px 12px}
+.nav{padding:9px 22px;border:0;border-radius:10px;background:var(--br);color:var(--onbr);font-weight:600}
+.nav:disabled{background:var(--line);color:var(--mut);cursor:not-allowed}
+.ctr{color:var(--mut);font-weight:600}
+main{flex:1;position:relative;min-height:0}
+.slide{position:absolute;inset:0;display:none;overflow:hidden;padding:8px 18px}
+.slide.on{display:flex}
+.wrap{margin:auto;width:100%;max-width:1040px;background:var(--card);border:1px solid var(--line);border-radius:1em;padding:1.3em 1.7em}
+h1,h2,h3,h4{line-height:1.15}
+h1{font-size:2.7em;font-weight:800;color:var(--br)}
+h2{font-size:1.9em;font-weight:800;color:var(--br);margin-bottom:.45em}
+h3{font-size:1.2em;color:var(--br2);margin-bottom:.4em}
+h4{font-size:1.05em;color:var(--br);margin-bottom:.3em}
+p{margin-bottom:.6em}ul,ol{margin:0 0 .4em 1.2em}
+.sub{font-size:1.3em;color:var(--mut)}
+.k{background:var(--keybg);color:#fff;border-radius:.8em;padding:.8em 1.1em;font-weight:600;font-size:1.1em;margin:.8em 0}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.8em;margin:.8em 0}
+.c{background:var(--tint);border-left:6px solid var(--br);border-radius:.7em;padding:.8em 1em}
+.c.t{border-color:var(--br2)}
+.hi{background:var(--warn);color:var(--ink);border-left:6px solid var(--warnb);border-radius:.7em;padding:.8em 1em;margin:.8em 0}
+.ex{background:var(--info);border-left:6px solid var(--infob);border-radius:.7em;padding:.8em 1em;margin:.8em 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:.8em;margin:.8em 0}.two>div{border-radius:.7em;padding:.8em 1em}
+.pro{background:var(--goodbg)}.pro h4{color:var(--good)}.con{background:var(--badbg)}.con h4{color:var(--bad)}.neu{background:var(--tint)}
+.q{font-style:italic;background:var(--tint);border-left:6px solid var(--br);border-radius:.7em;padding:.8em 1em;margin:.8em 0}.q small{display:block;color:var(--mut);font-style:normal}
+.code{background:var(--code);color:var(--codet);border-radius:.7em;padding:.8em 1em;font:1em/1.6 ui-monospace,Consolas,monospace;white-space:pre-wrap;margin:.8em 0}
+table{border-collapse:collapse;width:100%;margin:.6em 0}th,td{padding:.55em .8em;text-align:left;border-bottom:1px solid var(--line)}th{background:var(--br);color:var(--onbr)}tr:nth-child(even) td{background:var(--tint)}
+.note{font-size:.85em;color:var(--mut)}
+.tag{display:inline-block;background:var(--br2);color:var(--bg);border-radius:99px;padding:1px 12px;font-size:.8em;font-weight:600;margin-bottom:.5em}
+.act{border:2px dashed var(--br2)}
+.opt{display:block;width:100%;text-align:left;margin:.35em 0;padding:.6em .9em;border:2px solid var(--line);border-radius:.6em;background:var(--card)}
+.opt:hover:not(:disabled){border-color:var(--br)}
+.opt.ok{border-color:var(--good);background:var(--goodbg);color:var(--good);font-weight:600}.opt.no{border-color:var(--bad);background:var(--badbg);color:var(--bad)}
+.opt.ok::before{content:"✓ "}.opt.no::before{content:"✗ "}
+.fb{color:var(--mut);min-height:3em;margin:.3em 0}
+.qn{color:var(--mut);font-weight:600;font-size:.9em}
+.row{display:flex;flex-wrap:wrap;gap:.6em;align-items:center;margin:.5em 0}.row .opt{width:auto;margin:0}
+.big{font-size:1.8em;font-weight:800;color:var(--br)}
+input[type=range],select,input[type=number]{accent-color:var(--br);font:inherit;padding:.3em;border-radius:.5em;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.stack{max-width:420px;margin:.6em auto;display:grid;gap:.3em;text-align:center}.stack div{background:var(--keybg);color:#fff;border-radius:.5em;padding:.4em;font-weight:600}
+.chk{display:flex;gap:.6em;align-items:center;padding:.3em 0}.chk input{width:1.3em;height:1.3em;accent-color:var(--br)}
+.refs p{font-size:.8em;overflow-wrap:anywhere;margin-bottom:.4em}
+svg text{fill:var(--ink)}
+@media(max-width:700px){.two{grid-template-columns:1fr}.brand{display:none}}
+@media(prefers-reduced-motion:no-preference){.slide.on .wrap{animation:in .35s ease}@keyframes in{from{opacity:0;transform:translateY(10px)}}}
+</style>
+</head>
+<body>
+<header class="top"><span class="brand">Ethereum 101</span><div class="bar" role="progressbar" aria-label="Progress"><i id="pg"></i></div><button class="ic" id="th" aria-label="Toggle dark mode">◐</button></header>
+<main id="deck">
+
+<section class="slide on"><div class="wrap">
+<h1>The Ethereum Revolution</h1>
+<p class="sub">Smart Contracts, Consensus, and Programmable Money</p>
+<div class="k">Bitcoin gave us decentralised money. Ethereum gave us decentralised everything.</div>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<h2>From Digital Gold to World Computer</h2>
+<div class="g">
+<div class="c"><h4>2009 – Bitcoin</h4><p>“What if money didn’t need banks?”</p><p><strong>Achievement:</strong> decentralised currency</p></div>
+<div class="c"><h4>2013 – Vitalik Buterin’s insight</h4><p>“What if blockchain could do more than just money?”</p><p><strong>The limitation:</strong> Bitcoin’s scripting language is intentionally limited</p></div>
+<div class="c"><h4>Buterin’s vision</h4><p>Ethereum: a blockchain with a Turing-complete programming language</p><p><strong>Allows:</strong> smart contracts encoding arbitrary rules</p></div>
+</div>
+<div class="hi"><strong>Context:</strong> In 2013, Vitalik Buterin published a white paper proposing Ethereum as a programmable blockchain platform.</div>
+</div></section>
+
+<section class="slide"><div class="wrap act"><span class="tag">Activity</span><h2>Quick check</h2><div class="quiz" data-k="s1"></div></div></section>
+
+<section class="slide"><div class="wrap">
+<h2>Smart Contracts – Code is Law</h2>
+<div class="k">Smart contracts are self-executing agreements that run exactly as programmed.</div>
+<div class="q">“A smart contract is a contractual agreement embedded in a self-enforceable piece of code.”<small>— Kushwaha et al. (2022)</small></div>
+<h3>The WHEN → THEN logic</h3>
+<p>Smart contracts follow deterministic rules:</p>
+<div class="code">WHEN [condition is met]
+THEN [action executes automatically]</div>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<h2>The Vending Machine Analogy</h2>
+<div class="ex"><strong>WHEN</strong> correct payment inserted → <strong>THEN</strong> product dispensed
+<ul><li>No human middleman needed</li><li>Rules enforced automatically</li><li>Transaction is transparent</li></ul></div>
+<div class="two">
+<div class="neu"><h4>Traditional contract</h4><ul><li>Parties sign agreement</li><li>Requires trust</li><li>Needs intermediary</li><li>Can be disputed</li><li>Enforcement takes time</li></ul></div>
+<div class="neu"><h4>Smart contract</h4><ul><li>Code defines agreement</li><li>Trustless execution</li><li>Self-enforcing</li><li>Transparent &amp; immutable</li><li>Instant execution</li></ul></div>
+</div>
+</div></section>
+
+<section class="slide"><div class="wrap act"><span class="tag">Activity</span><h2>Be the vending machine</h2>
+<p>The snack costs £1. Insert coins, then press the button and see whether the contract fires.</p>
+<div class="row"><button class="opt" data-coin="0.5">Insert 50p</button><button class="opt" data-coin="1">Insert £1</button><button class="opt" id="vgo">Press B2</button><button class="opt" id="vrs">Reset</button></div>
+<div class="code" id="vcode" aria-live="polite"></div></div></section>
+
+<section class="slide"><div class="wrap">
+<h2>Why Ethereum Matters</h2>
+<div class="k">Bitcoin can only transfer value. Ethereum can encode ANY agreement – financial instruments, property ownership, voting systems, supply chains, and more.</div>
+<div class="hi"><p><strong>📚 Want technical details?</strong></p><p>Check the <strong>Smart Contracts Micro-Lecture</strong> on Blackboard for Solidity programming, security vulnerabilities, cryptography, and development tools.</p></div>
+</div></section>
+
+<section class="slide"><div class="wrap act"><span class="tag">Activity</span><h2>Quick check</h2><div class="quiz" data-k="s2"></div></div></section>
+
+<section class="slide"><div class="wrap">
+<h2>Consensus – Agreement Without Authority</h2>
+<div class="k">Blockchain’s biggest trick: getting strangers to agree on truth without trusting anyone.</div>
+<p>Consensus mechanisms are protocols that ensure all participants in a decentralised network agree on the state of the blockchain.</p>
+<div class="g">
+<div class="c"><h4>Proof of Work (PoW)</h4><p>Miners compete to solve cryptographic puzzles. The first to solve it adds the next block and earns a reward.</p><p><strong>Used by:</strong> Bitcoin, Ethereum (pre-2022)</p><p><strong>Trade-off:</strong> high security, massive energy use</p></div>
+<div class="c t"><h4>Proof of Stake (PoS)</h4><p>Validators lock up cryptocurrency as collateral. The network selects them to propose and validate blocks, often in proportion to stake.</p><p><strong>Used by:</strong> Ethereum (post-2022), Cardano, Solana</p><p><strong>Trade-off:</strong> energy-efficient, needs capital (32 ETH)</p></div>
+</div>
+</div></section>
+
+<section class="slide"><div class="wrap act"><span class="tag">Activity</span><h2>PoW or PoS?</h2><p>Which consensus mechanism does each statement describe?</p><div class="quiz" data-k="s3"></div></div></section>
+
+<section class="slide"><div class="wrap">
+<h2>The Merge (September 2022)</h2>
+<p>Ethereum successfully transitioned from Proof of Work to Proof of Stake.</p>
+<div class="two">
+<div class="pro"><h4>Why it matters</h4><ul><li>99.95% reduction in energy consumption</li><li>Faster transaction finality</li><li>More scalable for future growth</li><li>Maintains network security</li></ul></div>
+<div class="con"><h4>Trade-off debate</h4><ul><li>Critics: “PoS favours the wealthy”</li><li>Supporters: “PoW favours equipment owners”</li><li>Reality: both have centralisation concerns</li></ul></div>
+</div>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<h2>The Ethereum Ecosystem</h2>
+<div class="k">Ethereum enables a new internet where users control their data.</div>
+<div class="g">
+<div class="c"><h4>🏦 DeFi</h4><ul><li>Uniswap: trade without banks</li><li>Compound: lend/borrow</li><li>MakerDAO: stablecoins</li></ul></div>
+<div class="c"><h4>🎨 NFTs</h4><ul><li>OpenSea: digital art</li><li>ENS: domain names</li><li>True ownership</li></ul></div>
+<div class="c"><h4>🏛️ DAOs</h4><ul><li>Code-governed organisations</li><li>Community voting</li><li>No CEO needed</li></ul></div>
+<div class="c"><h4>🌐 Web3</h4><ul><li>Own your content</li><li>Gaming assets</li><li>Identity control</li></ul></div>
+</div>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<h2>Smart Contract Architecture</h2>
+<svg viewBox="0 0 620 330" role="img" aria-label="Diagram: externally owned accounts and a smart contract (balance, address, storage, code) send transactions to a miner, who records them in Block N of the blockchain, linked to Block N-1 and Block N+1." style="width:100%;max-height:50vh;display:block;margin:0 auto" font-family="Inter,system-ui,sans-serif" font-size="13">
+<defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8z" fill="var(--mut)"/></marker></defs>
+<g stroke="var(--mut)" stroke-width="2"><rect x="30" y="20" width="170" height="70" rx="35" fill="var(--tint)"/><rect x="30" y="130" width="190" height="170" rx="10" fill="var(--tint)"/><rect x="380" y="10" width="200" height="300" rx="10" fill="var(--tint)"/>
+<path d="M115 92v36M220 215h156M115 300v10" fill="none" marker-end="url(#ar)"/></g>
+<text x="115" y="50" text-anchor="middle" font-weight="700">Externally</text><text x="115" y="68" text-anchor="middle" font-weight="700">Owned Accounts</text>
+<text x="125" y="155" text-anchor="middle" font-weight="700">Smart Contract</text>
+<g fill="var(--card)" stroke="var(--br)" stroke-width="2"><rect x="45" y="170" width="75" height="30" rx="5"/><rect x="130" y="170" width="75" height="30" rx="5"/><rect x="45" y="210" width="75" height="30" rx="5"/><rect x="130" y="210" width="75" height="30" rx="5"/></g>
+<g text-anchor="middle" font-size="12"><text x="82" y="190">Balance</text><text x="167" y="190">Address</text><text x="82" y="230">Storage</text><text x="167" y="230">Code</text></g>
+<text x="300" y="207" text-anchor="middle" font-weight="700">Miner</text>
+<text x="480" y="35" text-anchor="middle" font-weight="700">Block N-1</text><text x="480" y="75" text-anchor="middle" font-weight="700">Block N</text>
+<g fill="var(--card)" stroke="var(--br)" stroke-width="2"><rect x="400" y="92" width="160" height="30"/><rect x="400" y="128" width="160" height="30"/><rect x="400" y="164" width="160" height="30"/><rect x="400" y="200" width="160" height="44" fill="var(--br)"/></g>
+<g font-size="12"><text x="410" y="112">Hash of Block N-1</text><text x="410" y="148">Merkle Root</text><text x="410" y="184">Difficulty Target</text></g>
+<g text-anchor="middle" font-weight="700" font-size="12" style="fill:var(--onbr)"><text x="480" y="219" style="fill:var(--onbr)">Transactions /</text><text x="480" y="236" style="fill:var(--onbr)">Smart Contracts</text></g>
+<text x="480" y="290" text-anchor="middle" font-weight="700">Block N+1</text>
+<text x="115" y="325" text-anchor="middle" font-size="11">Other Smart Contracts · External Data Feeds</text>
+</svg>
+<p class="note" style="text-align:center">Smart contracts interact with externally owned accounts (users), other contracts, and external data feeds. All transactions are recorded in blocks on the blockchain.</p>
+</div></section>
+
+<section class="slide"><div class="wrap act"><span class="tag">Activity</span><h2>Match the example</h2><div class="quiz" data-k="s4"></div></div></section>
+
+<section class="slide"><div class="wrap">
+<h2>Gas Economics</h2>
+<div class="k">Nothing is free – even on decentralised networks.</div>
+<p><strong>Gas</strong> is the unit that measures the computational effort needed to execute operations on Ethereum. Every transaction and smart contract execution requires gas.</p>
+<div class="ex"><h4>Why gas exists</h4><ol><li><strong>Compensates validators</strong> for the computational work they perform</li><li><strong>Prevents spam attacks</strong> by making abuse economically expensive</li><li><strong>Allocates limited resources</strong> during network congestion</li></ol></div>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<h2>How Gas Works</h2>
+<ul><li><strong>Gas price:</strong> measured in “gwei” (1 ETH = 1 billion gwei)</li><li><strong>Gas limit:</strong> the maximum amount you’re willing to pay for a transaction</li><li><strong>Dynamic pricing:</strong> based on supply and demand – a busy network means higher fees</li><li><strong>Total cost:</strong> gas used × gas price = transaction fee (in ETH)</li></ul>
+<div class="hi"><h4>⚠️ Common misconception</h4><p><strong>Myth:</strong> “The Merge to Proof of Stake eliminated gas fees.”</p><p><strong>Reality:</strong> The Merge cut energy use by 99.95%, but gas fees remain necessary to pay validators and prevent spam. Layer 2 solutions (like Optimism and Arbitrum) are what dramatically reduce fees.</p></div>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<h2>What Does Gas Cost?</h2>
+<table><thead><tr><th>Transaction type</th><th>Typical gas</th><th>Approx. USD*</th></tr></thead><tbody>
+<tr><td>Simple ETH transfer</td><td>21,000</td><td>$2–5</td></tr><tr><td>ERC-20 token transfer</td><td>45,000–65,000</td><td>$5–15</td></tr><tr><td>NFT minting</td><td>50,000–150,000</td><td>$10–40</td></tr><tr><td>Complex contract interaction</td><td>100,000–500,000</td><td>$20–100+</td></tr></tbody></table>
+<p class="note">*Prices vary significantly with network congestion and the ETH market price.</p>
+</div></section>
+
+<section class="slide"><div class="wrap act"><span class="tag">Activity</span><h2>Fee calculator</h2>
+<div class="row"><label>Transaction <select id="gt"><option value="21000">Simple ETH transfer (21,000)</option><option value="55000">ERC-20 transfer (~55,000)</option><option value="100000">NFT minting (~100,000)</option><option value="300000">Complex contract (~300,000)</option></select></label></div>
+<div class="row"><label>Gas price: <b id="gv">20</b> gwei <input type="range" id="gp" min="1" max="100" value="20"></label></div>
+<div class="row"><label>ETH price (USD) <input type="number" id="ep" value="2200" min="1" style="width:110px"></label></div>
+<p>Fee = <span id="gf" class="big"></span></p><p class="note">Try a busy network (high gwei), then compare a simple transfer with a complex contract.</p></div></section>
+
+<section class="slide"><div class="wrap act"><span class="tag">Activity</span><h2>Quick check</h2><div class="quiz" data-k="s5"></div></div></section>
+
+<section class="slide"><div class="wrap">
+<h2>The Ethereum Stack</h2>
+<p class="sub" style="font-size:1.05em">Think of a layered cake: each layer does a different job, from the base blockchain up to the user interface.</p>
+<div class="g">
+<div class="c"><h4>🧱 1. Blockchain layer</h4><p>The foundation. Nodes (Geth, Nethermind) keep data in sync; validators who stake ETH secure it.</p><p class="note"><em>The database and trust system.</em></p></div>
+<div class="c"><h4>⚙️ 2. Smart contract layer (EVM)</h4><p>Contracts written in Solidity or Vyper, run by the EVM on every node.</p><p class="note"><em>The “app engine”.</em></p></div>
+<div class="c"><h4>🧩 3. Application layer (dApps)</h4><p>Uniswap, OpenSea, Aave. They talk to contracts via web3.js, ethers.js or wagmi.</p><p class="note"><em>The user-facing logic.</em></p></div>
+<div class="c"><h4>🌐 4. Interface layer</h4><p>Web or mobile front ends (HTML, React, Next.js) that connect to wallets like MetaMask so users can sign transactions.</p><p class="note"><em>The window to Ethereum.</em></p></div>
+<div class="c t"><h4>☁️ 5. Supporting infrastructure</h4><p>Node providers (Infura, Alchemy), indexing (The Graph), Layer 2s (Arbitrum, Optimism, Polygon), storage (IPFS, Arweave).</p><p class="note"><em>The internet plumbing.</em></p></div>
+</div>
+</div></section>
+
+<section class="slide"><div class="wrap act"><span class="tag">Activity</span><h2>Which layer?</h2><div class="quiz" data-k="s6"></div></div></section>
+
+<section class="slide"><div class="wrap">
+<h2>Synthesis – Bringing It All Together</h2>
+<div class="k">Programmable agreements + efficient consensus = decentralised future</div>
+<div class="two">
+<div><div class="stack"><div>📱 DApps</div><div>⚙️ Smart Contracts</div><div>💻 EVM</div><div>🤝 Consensus (PoS)</div><div>⛓️ Blockchain</div></div></div>
+<div class="c"><h4>Everything connects</h4><ol><li><strong>Buterin’s vision</strong> → programmable blockchain</li><li><strong>Smart contracts</strong> → automated agreements</li><li><strong>Consensus (PoS)</strong> → secure, efficient</li><li><strong>DApps</strong> → user applications</li><li><strong>Gas</strong> → economic model</li></ol></div>
+</div>
+</div></section>
+
+<section class="slide"><div class="wrap">
+<h2>For Your Project</h2>
+<div class="ex"><p class="note">Tick each question as you answer it.</p>
+<label class="chk"><input type="checkbox"> Does your idea need smart contracts?</label>
+<label class="chk"><input type="checkbox"> What consensus mechanism fits?</label>
+<label class="chk"><input type="checkbox"> Who are your users?</label>
+<label class="chk"><input type="checkbox"> How will the economics work?</label>
+<label class="chk"><input type="checkbox"> What problem are you solving?</label></div>
+<div class="k"><h3 style="color:#fff">🔑 Key takeaways</h3><p><strong>1.</strong> Ethereum extended blockchain to programmable smart contracts</p><p><strong>2.</strong> Proof of Stake enables efficient, secure consensus</p><p style="margin:0"><strong>3.</strong> DApps give users control without intermediaries</p></div>
+</div></section>
+
+<section class="slide"><div class="wrap act"><span class="tag">Activity</span><h2>Final challenge</h2><div class="quiz" data-k="s7"></div></div></section>
+
+<section class="slide"><div class="wrap refs"><h2>📚 References</h2>
+<p>Buterin, V. (2013) <em>Ethereum Whitepaper</em>. Available at: https://ethereum.org/en/history/#whitepaper. (Accessed: 22 October 2025).</p>
+<p>Kushwaha, S. S., Joshi, S., Singh, D., Kaur, M., &amp; Lee, H.-N. (2021). Systematic Review of Security Vulnerabilities in Ethereum Blockchain Smart Contract. <em>IEEE Access</em>, 10, 6605-6621. https://doi.org/10.1109/ACCESS.2021.3140091</p>
+<p>Kushwaha, S. S., Joshi, S., Singh, D., Kaur, M., &amp; Lee, H.-N. (2022). Ethereum Smart Contract Analysis Tools: A Systematic Review. <em>IEEE Access</em>, 10, 57037-57062. https://doi.org/10.1109/ACCESS.2022.3169902</p>
+<p>Zhang, W., Anand, T. (2022). Ethereum Architecture and Overview. In: <em>Blockchain and Ethereum Smart Contract Solution Development</em>. Apress, Berkeley, CA. https://doi.org/10.1007/978-1-4842-8164-2_6</p>
+<p>Zhou, H., Milani Fard, A., &amp; Makanju, A. (2022). The State of Ethereum Smart Contracts Security: Vulnerabilities, Countermeasures, and Tool Support. <em>Journal of Cybersecurity and Privacy</em>, 2(2), 358-378. https://doi.org/10.3390/jcp2020019</p></div></section>
+
+</main>
+<nav class="dock" aria-label="Slides"><button class="nav" id="pv">← Previous</button><span class="ctr" id="ct" aria-live="polite"></span><button class="nav" id="nx">Next →</button></nav>
+
+<script>
+const $=s=>document.querySelector(s),S=[...document.querySelectorAll('.slide')],N=S.length;let cur=0;
+/* fit every slide to the screen: shrink text until nothing needs scrolling */
+function fit(){const s=S[cur],w=s.firstElementChild;let f=Math.min(22,Math.max(15,innerWidth/58));s.style.overflowY='hidden';s.style.fontSize=f+'px';
+while(f>9&&w.offsetHeight>s.clientHeight-16){f-=.5;s.style.fontSize=f+'px'}
+if(w.offsetHeight>s.clientHeight-16)s.style.overflowY='auto'}
+function go(n){cur=Math.max(0,Math.min(N-1,n));S.forEach((s,i)=>s.classList.toggle('on',i===cur));
+$('#ct').textContent=`Slide ${cur+1} of ${N}`;$('#pv').disabled=cur===0;$('#nx').disabled=cur===N-1;$('#pg').style.width=((cur+1)/N*100)+'%';fit();history.replaceState(null,'','#'+(cur+1))}
+$('#pv').onclick=()=>go(cur-1);$('#nx').onclick=()=>go(cur+1);
+addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if(e.key==='ArrowRight'||e.key==='PageDown')go(cur+1);if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1)});
+let tx=0;$('#deck').addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});$('#deck').addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>90)go(cur+(d<0?1:-1))});
+$('#th').onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark'};
+if(matchMedia('(prefers-color-scheme:dark)').matches)document.documentElement.dataset.theme='dark';
+addEventListener('resize',fit);document.fonts&&document.fonts.ready.then(fit);
+
+/* quizzes, one question per screen: [question, options, correct index, explanation] */
+const W=["Proof of Work","Proof of Stake"];
+const Q={
+s1:[["Why did Vitalik Buterin propose Ethereum?",["Bitcoin’s scripting language is intentionally limited","Bitcoin was too expensive to mine","Banks asked for a new blockchain"],0,"Bitcoin’s limited scripting was the limitation Ethereum set out to overcome."],["What does Turing-complete allow Ethereum to do?",["Only transfer coins faster","Run smart contracts encoding arbitrary rules","Remove the need for validators"],1,"A Turing-complete language lets smart contracts encode arbitrary rules."]],
+s2:[["In the WHEN→THEN logic, what happens when the condition is met?",["A human approves it","The action executes automatically","The contract waits for a vote"],1,"The action executes automatically, with no middleman."],["Which is true of a smart contract?",["It needs an intermediary","Execution is self-enforcing","It can be quietly edited by one party"],1,"Code defines the agreement and enforces it."]],
+s3:[["Miners compete to solve cryptographic puzzles",W,0,"Competing to solve puzzles is Proof of Work."],["Validators lock up (stake) cryptocurrency as collateral",W,1,"Staking is the heart of Proof of Stake."],["Selection probability is often proportional to stake size",W,1,"Proof of Stake: bigger stake, often better odds."],["Massive energy consumption",W,0,"Proof of Work: high security, high energy."],["Requires 32 ETH for Ethereum",W,1,"32 ETH is the Ethereum staking requirement."],["Used by Bitcoin",W,0,"Bitcoin uses Proof of Work."]],
+s4:[["Uniswap is an example of…",["DeFi","NFTs","DAOs"],0,"Uniswap: trade without banks, which is DeFi."],["ENS (domain names) belongs to…",["DeFi","NFTs","Web3 gaming"],1,"ENS is listed under NFTs."],["“Code-governed orgs, community voting, no CEO needed” describes…",["DAOs","NFTs","DeFi"],0,"That’s a DAO."]],
+s5:[["Which formula gives the transaction fee?",["Gas price ÷ Gas limit","Gas used × Gas price","Gas limit + ETH price"],1,"Total cost: gas used × gas price (in ETH)."],["What actually reduces fees dramatically?",["The Merge to Proof of Stake","Layer 2 solutions like Optimism and Arbitrum","Lowering the gas limit"],1,"The Merge cut energy use by 99.95%, but fees stayed. Layer 2s cut fees."],["1 ETH equals how many gwei?",["1 million","1 billion","1 trillion"],1,"1 ETH = 1 billion gwei."]],
+s6:[["Which layer contains the EVM?",["Smart Contract Layer","Interface Layer","Supporting Infrastructure"],0,"The EVM runs contracts on every node."],["MetaMask connecting so users can sign transactions is part of…",["The Interface Layer (and the dApp ecosystem)","The Blockchain Layer only","Storage"],0,"The front end connects to wallets so users can sign transactions."],["Infura and Alchemy are…",["Layer 2 networks","Node providers","Consensus mechanisms"],1,"They give apps access to the blockchain."]],
+s7:[["Which pairing is right?",["Gas → Economic model","Consensus → User interface","DApps → Validators"],0,"Gas is the economic model."],["The Merge moved Ethereum from…",["PoS to PoW","PoW to PoS","Layer 1 to Layer 2"],1,"September 2022: Proof of Work to Proof of Stake."],["Smart contracts + efficient consensus lead to…",["A decentralised future","Free transactions","Fewer validators"],0,"Programmable agreements + efficient consensus = decentralised future."],["Which is NOT a reason gas exists?",["Compensates validators","Prevents spam","Guarantees a fixed price"],2,"Gas pricing is dynamic, based on supply and demand."]]};
+const mk=(t,f)=>{const b=document.createElement('button');b.textContent=t;if(f)b.onclick=f;return b};
+document.querySelectorAll('.quiz').forEach(box=>{const qs=Q[box.dataset.k];let i=0,sc=0;
+const draw=()=>{box.textContent='';
+if(i>=qs.length){box.innerHTML=`<p class="big">Score: ${sc} / ${qs.length}</p>`;const r=mk('Try again',()=>{i=sc=0;draw()});r.className='opt';r.style.width='auto';box.append(r);fit();return}
+const [q,o,a,w]=qs[i];box.innerHTML=`<p class="qn">Question ${i+1} of ${qs.length}</p><h3>${q}</h3>`;
+const fb=document.createElement('p');fb.className='fb';fb.setAttribute('aria-live','polite');
+const nx=mk(i+1<qs.length?'Next question →':'See score',()=>{i++;draw()});nx.className='nav';nx.hidden=true;
+const bs=o.map((t,k)=>{const b=mk(t);b.className='opt';b.onclick=()=>{bs.forEach(x=>x.disabled=true);b.classList.add(k===a?'ok':'no');bs[a].classList.add('ok');fb.textContent=(k===a?'Correct. ':'Not quite. ')+w;if(k===a)sc++;nx.hidden=false;nx.focus()};box.append(b);return b});
+box.append(fb,nx);fit()};draw()});
+
+/* vending simulator */
+let pay=0;const vc=$('#vcode');function vr(m,hit){vc.textContent=`WHEN payment >= £1.00  [paid: £${pay.toFixed(2)}]\nTHEN dispense snack\n\n`+(hit?'✓ ':'')+m;vc.style.outline=hit?'3px solid #5eead4':'none'}
+document.querySelectorAll('[data-coin]').forEach(b=>b.onclick=()=>{pay+=+b.dataset.coin;vr('Coin accepted. Waiting…')});
+$('#vgo').onclick=()=>pay>=1?(vr('Condition met → snack dispensed. No cashier needed.',1),pay-=1):vr('Condition NOT met → nothing happens. The rule is enforced automatically.');
+$('#vrs').onclick=()=>{pay=0;vr('Reset.')};vr('Insert coins to start.');
+
+/* gas calculator */
+function gas(){const g=+$('#gt').value,p=+$('#gp').value,e=+$('#ep').value||0,eth=g*p/1e9;$('#gv').textContent=p;$('#gf').textContent=`${eth.toFixed(6)} ETH ≈ $${(eth*e).toFixed(2)}`}
+['gt','gp','ep'].forEach(i=>$('#'+i).oninput=gas);gas();
+
+go(Math.max(0,Math.min(N-1,(parseInt(location.hash.slice(1))||1)-1)));
+</script>
+</body>
+</html>
